@@ -1,6 +1,6 @@
 ---
 product: base
-title: React Toggle Button components
+title: React Toggle Button component and hook
 components: ToggleButton
 hooks: useToggleButton
 githubLabel: 'component: ToggleButton'
