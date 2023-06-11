@@ -27,6 +27,7 @@ const pages = [
           { pathname: '/base/react-select', title: 'Select' },
           { pathname: '/base/react-slider', title: 'Slider' },
           { pathname: '/base/react-switch', title: 'Switch' },
+          { pathname: '/base/react-toggle-button', title: 'Toggle Button' },
         ],
       },
       {

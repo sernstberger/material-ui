@@ -42,6 +42,10 @@ module.exports = [
     title: 'TextareaAutosize',
   },
   {
+    pathname: '/base/react-button/components-api/#toggle-button',
+    title: 'ToggleButton',
+  },
+  {
     pathname: '/base/react-autocomplete/hooks-api/#use-autocomplete',
     title: 'useAutocomplete',
   },

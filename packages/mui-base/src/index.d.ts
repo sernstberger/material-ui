@@ -118,3 +118,6 @@ export * from './useTabs';
 
 export { default as useTabsList } from './useTabsList';
 export * from './useTabsList';
+
+export { default as useToggleButton } from './useToggleButton';
+export * from './useToggleButton';
