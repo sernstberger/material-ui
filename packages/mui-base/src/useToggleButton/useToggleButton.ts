@@ -19,7 +19,7 @@ function useToggleButton(parameters: UseToggleButtonParameters) {
   // const tabRef = React.useRef<HTMLElement>(null);
   // const id = useId(idParam);
 
-  return 'foo';
+  return 'bar';
 }
 
 export default useToggleButton;
