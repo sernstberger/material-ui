@@ -42,7 +42,7 @@ module.exports = [
     title: 'TextareaAutosize',
   },
   {
-    pathname: '/base/react-button/components-api/#toggle-button',
+    pathname: '/base/react-toggle-button/components-api/#toggle-button',
     title: 'ToggleButton',
   },
   {
@@ -67,4 +67,8 @@ module.exports = [
   { pathname: '/base/react-tabs/hooks-api/#use-tab-panel', title: 'useTabPanel' },
   { pathname: '/base/react-tabs/hooks-api/#use-tabs', title: 'useTabs' },
   { pathname: '/base/react-tabs/hooks-api/#use-tabs-list', title: 'useTabsList' },
+  {
+    pathname: '/base/react-toggle-button/hooks-api/#use-toggle-button',
+    title: 'useToggleButton',
+  },
 ];
