@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { unstable_useId as useId, unstable_useForkRef as useForkRef } from '@mui/utils';
-import { useTabsContext } from '../Tabs';
+import { useToggleButtonGroupContext } from '../ToggleButtonGroup';
 import {
   UseToggleButtonParameters,
   UseToggleButtonReturnValue,
@@ -33,7 +33,11 @@ function useToggleButton(parameters: UseToggleButtonParameters): UseToggleButton
   const tabRef = React.useRef<HTMLElement>(null);
   const id = useId(idParam);
 
-  const { value: selectedValue, selectionFollowsFocus, getTabPanelId } = useTabsContext();
+  const {
+    value: selectedValue,
+    selectionFollowsFocus,
+    getTabPanelId,
+  } = useToggleButtonGroupContext();
 
   const tabMetadata = React.useMemo(() => ({ disabled, ref: tabRef, id }), [disabled, tabRef, id]);
 
