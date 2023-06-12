@@ -30,6 +30,8 @@ export interface ToggleButtonOwnProps extends Omit<UseToggleButtonParameters, 'r
    * @default {}
    */
   slots?: ToggleButtonSlots;
+
+  value: any;
 }
 
 export interface ToggleButtonSlots {
