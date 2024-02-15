@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { FormControlState } from '../FormControl';
 
-export interface UseInputParameters {
+export interface UseCheckboxParameters {
   /**
    * The default value. Use when the component is not controlled.
    */
@@ -29,17 +29,17 @@ export interface UseInputParameters {
   value?: unknown;
 }
 
-export interface UseInputRootSlotOwnProps {
+export interface UseCheckboxRootSlotOwnProps {
   onClick: React.MouseEventHandler | undefined;
 }
 
-export type UseInputRootSlotProps<ExternalProps = {}> = Omit<
+export type UseCheckboxRootSlotProps<ExternalProps = {}> = Omit<
   ExternalProps,
-  keyof UseInputRootSlotOwnProps | 'onBlur' | 'onChange' | 'onFocus'
+  keyof UseCheckboxRootSlotOwnProps | 'onBlur' | 'onChange' | 'onFocus'
 > &
-  UseInputRootSlotOwnProps;
+  UseCheckboxRootSlotOwnProps;
 
-export interface UseInputInputSlotOwnProps {
+export interface UseCheckboxInputSlotOwnProps {
   'aria-invalid': React.AriaAttributes['aria-invalid'];
   defaultValue: string | number | readonly string[] | undefined;
   ref: React.RefCallback<HTMLInputElement | HTMLTextAreaElement> | null;
@@ -51,13 +51,13 @@ export interface UseInputInputSlotOwnProps {
   disabled: boolean;
 }
 
-export type UseInputInputSlotProps<ExternalProps = {}> = Omit<
+export type UseCheckboxInputSlotProps<ExternalProps = {}> = Omit<
   ExternalProps,
-  keyof UseInputInputSlotOwnProps
+  keyof UseCheckboxInputSlotOwnProps
 > &
-  UseInputInputSlotOwnProps;
+  UseCheckboxInputSlotOwnProps;
 
-export interface UseInputReturnValue {
+export interface UseCheckboxReturnValue {
   /**
    * If `true`, the component will be disabled.
    */
@@ -81,7 +81,7 @@ export interface UseInputReturnValue {
    */
   getInputProps: <ExternalProps extends Record<string, any> = {}>(
     externalProps?: ExternalProps,
-  ) => UseInputInputSlotProps<ExternalProps>;
+  ) => UseCheckboxInputSlotProps<ExternalProps>;
   /**
    * Resolver for the root slot's props.
    * @param externalProps props for the root slot
@@ -89,7 +89,7 @@ export interface UseInputReturnValue {
    */
   getRootProps: <ExternalProps extends Record<string, any> = {}>(
     externalProps?: ExternalProps,
-  ) => UseInputRootSlotProps<ExternalProps>;
+  ) => UseCheckboxRootSlotProps<ExternalProps>;
   inputRef: React.RefCallback<HTMLInputElement | HTMLTextAreaElement> | null;
   /**
    * If `true`, the `input` will indicate that it's required.

@@ -1,14 +1,14 @@
 'use client';
 import * as React from 'react';
-import MuiError from '@mui/utils/macros/MuiError.macro';
+import MuiError from '@mui-internal/babel-macros/MuiError.macro';
 import { unstable_useForkRef as useForkRef } from '@mui/utils';
 import { FormControlState, useFormControlContext } from '../FormControl';
 import { extractEventHandlers } from '../utils/extractEventHandlers';
 import {
-  UseInputInputSlotProps,
-  UseInputParameters,
-  UseInputRootSlotProps,
-  UseInputReturnValue,
+  UseCheckboxInputSlotProps,
+  UseCheckboxParameters,
+  UseCheckboxRootSlotProps,
+  UseCheckboxReturnValue,
 } from './useCheckbox.types';
 /**
  *
@@ -20,7 +20,7 @@ import {
  *
  * - [useCheckbox API](https://mui.com/base-ui/react-input/hooks-api/#use-input)
  */
-export function useCheckbox(parameters: UseInputParameters = {}): UseInputReturnValue {
+export function useCheckbox(parameters: UseCheckboxParameters = {}): UseCheckboxReturnValue {
   const {
     defaultValue: defaultValueProp,
     disabled: disabledProp = false,
@@ -166,7 +166,7 @@ export function useCheckbox(parameters: UseInputParameters = {}): UseInputReturn
 
   const getRootProps = <ExternalProps extends Record<string, any> = {}>(
     externalProps: ExternalProps = {} as ExternalProps,
-  ): UseInputRootSlotProps<ExternalProps> => {
+  ): UseCheckboxRootSlotProps<ExternalProps> => {
     // onBlur, onChange and onFocus are forwarded to the input slot.
     const propsEventHandlers = extractEventHandlers(parameters, ['onBlur', 'onChange', 'onFocus']);
     const externalEventHandlers = { ...propsEventHandlers, ...extractEventHandlers(externalProps) };
@@ -180,7 +180,7 @@ export function useCheckbox(parameters: UseInputParameters = {}): UseInputReturn
 
   const getInputProps = <ExternalProps extends Record<string, any> = {}>(
     externalProps: ExternalProps = {} as ExternalProps,
-  ): UseInputInputSlotProps<ExternalProps> => {
+  ): UseCheckboxInputSlotProps<ExternalProps> => {
     const propsEventHandlers: Record<string, React.EventHandler<any> | undefined> = {
       onBlur,
       onChange,
