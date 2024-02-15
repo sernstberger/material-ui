@@ -24,7 +24,7 @@ export function getCheckboxUtilityClass(slot: string): string {
   return generateUtilityClass(COMPONENT_NAME, slot);
 }
 
-export const inputClasses: CheckboxClasses = generateUtilityClasses(COMPONENT_NAME, [
+export const checkboxClasses: CheckboxClasses = generateUtilityClasses(COMPONENT_NAME, [
   'root',
   'formControl',
   'focused',

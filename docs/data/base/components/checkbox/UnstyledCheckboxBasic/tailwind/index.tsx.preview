@@ -1,4 +1,4 @@
-<Input
+<Checkbox
   className={isDarkMode ? 'dark' : ''}
   slotProps={{
     input: {

@@ -1,10 +1,10 @@
 import * as React from 'react';
-import { useInput } from '@mui/base/useInput';
+import { useCheckbox } from '@mui/base/useCheckbox';
 import { styled } from '@mui/system';
 import { unstable_useForkRef as useForkRef } from '@mui/utils';
 
 const CustomInput = React.forwardRef(function CustomInput(props, ref) {
-  const { getRootProps, getInputProps } = useInput(props);
+  const { getRootProps, getInputProps } = useCheckbox(props);
 
   const inputProps = getInputProps();
 

@@ -11,12 +11,12 @@ import {
   CheckboxRootSlotProps,
   CheckboxTypeMap,
 } from './Checkbox.types';
-import { useInput } from '../useInput';
+import { useCheckbox } from '../useCheckbox';
 import { EventHandlers, useSlotProps, WithOptionalOwnerState } from '../utils';
 import { unstable_composeClasses as composeClasses } from '../composeClasses';
 import { useClassNamesOverride } from '../utils/ClassNameConfigurator';
 
-const useUtilityClasses = (ownerState: InputOwnerState) => {
+const useUtilityClasses = (ownerState: CheckboxOwnerState) => {
   const { disabled, error, focused, formControlContext, multiline, startAdornment, endAdornment } =
     ownerState;
 
@@ -34,7 +34,7 @@ const useUtilityClasses = (ownerState: InputOwnerState) => {
     input: ['input', disabled && 'disabled', multiline && 'multiline'],
   };
 
-  return composeClasses(slots, useClassNamesOverride(getInputUtilityClass));
+  return composeClasses(slots, useClassNamesOverride(getCheckboxUtilityClass));
 };
 
 /**
@@ -91,7 +91,7 @@ const Checkbox = React.forwardRef(function Checkbox<RootComponentType extends Re
     formControlContext,
     error: errorState,
     disabled: disabledState,
-  } = useInput({
+  } = useCheckbox({
     disabled,
     defaultValue,
     error,

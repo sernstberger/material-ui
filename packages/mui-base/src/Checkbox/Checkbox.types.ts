@@ -7,7 +7,7 @@ import { PolymorphicProps, SlotComponentProps } from '../utils';
 export interface CheckboxRootSlotPropsOverrides {}
 export interface CheckboxInputSlotPropsOverrides {}
 
-export interface SingleLineInputProps {
+export interface SingleLineCheckboxProps {
 
   /**
    * Type of the `input` element. It should be [a valid HTML5 input type](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#Form_%3Cinput%3E_types).
@@ -66,8 +66,8 @@ export type CheckboxOwnProps = (SingleLineCheckboxProps) &
      * @default {}
      */
     slotProps?: {
-      root?: SlotComponentProps<'div', InputRootSlotPropsOverrides, InputOwnerState>;
-      input?: SlotComponentProps<'input', InputInputSlotPropsOverrides, InputOwnerState>;
+      root?: SlotComponentProps<'div', CheckboxRootSlotPropsOverrides, CheckboxOwnerState>;
+      input?: SlotComponentProps<'input', CheckboxInputSlotPropsOverrides, CheckboxOwnerState>;
     };
     /**
      * The components used for each slot inside the InputBase.
@@ -115,7 +115,7 @@ CheckboxOwnProps & {
 >;
 
 export type CheckboxRootSlotProps = Simplify<
-  UseInputRootSlotProps & {
+  UseCheckboxRootSlotProps & {
     ownerState: CheckboxOwnerState;
     className?: string;
     children?: React.ReactNode;
@@ -124,7 +124,7 @@ export type CheckboxRootSlotProps = Simplify<
 >;
 
 export type CheckboxInputSlotProps = Simplify<
-  Omit<UseInputRootSlotProps, 'onClick'> & {
+  Omit<UseCheckboxRootSlotProps, 'onClick'> & {
     'aria-describedby': React.AriaAttributes['aria-describedby'];
     'aria-label': React.AriaAttributes['aria-label'];
     'aria-labelledby': React.AriaAttributes['aria-labelledby'];
