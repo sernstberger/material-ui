@@ -7,19 +7,11 @@ import { PolymorphicProps, SlotComponentProps } from '../utils';
 export interface CheckboxRootSlotPropsOverrides {}
 export interface CheckboxInputSlotPropsOverrides {}
 
-export interface SingleLineCheckboxProps {
-
-  /**
-   * Type of the `input` element. It should be [a valid HTML5 input type](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#Form_%3Cinput%3E_types).
-   * @default 'text'
-   */
-  type?: React.HTMLInputTypeAttribute;
-}
 
 
 
-export type CheckboxOwnProps = (SingleLineCheckboxProps) &
-  Omit<UseCheckboxParameters, 'error'> & {
+
+export type CheckboxOwnProps = Omit<UseCheckboxParameters, 'error'> & {
     'aria-describedby'?: string;
     'aria-label'?: string;
     'aria-labelledby'?: string;
@@ -110,7 +102,6 @@ export type CheckboxOwnerState = Simplify<
 CheckboxOwnProps & {
     formControlContext: FormControlState | undefined;
     focused: boolean;
-    type: React.InputHTMLAttributes<HTMLInputElement>['type'] | undefined;
   }
 >;
 
@@ -139,6 +130,5 @@ export type CheckboxInputSlotProps = Simplify<
     placeholder: string | undefined;
     readOnly: boolean | undefined;
     ref: React.Ref<HTMLInputElement>;
-    type: React.HTMLInputTypeAttribute | undefined;
   }
 >;

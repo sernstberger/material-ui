@@ -2,7 +2,6 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { PolymorphicComponent } from '../utils/PolymorphicComponent';
-import { isHostComponent } from '../utils/isHostComponent';
 import { getCheckboxUtilityClass } from './checkboxClasses';
 import {
   CheckboxInputSlotProps,
@@ -17,7 +16,7 @@ import { unstable_composeClasses as composeClasses } from '../composeClasses';
 import { useClassNamesOverride } from '../utils/ClassNameConfigurator';
 
 const useUtilityClasses = (ownerState: CheckboxOwnerState) => {
-  const { disabled, error, focused, formControlContext, multiline, startAdornment, endAdornment } =
+  const { disabled, error, focused, formControlContext } =
     ownerState;
 
   const slots = {
@@ -27,11 +26,8 @@ const useUtilityClasses = (ownerState: CheckboxOwnerState) => {
       error && 'error',
       focused && 'focused',
       Boolean(formControlContext) && 'formControl',
-      multiline && 'multiline',
-      Boolean(startAdornment) && 'adornedStart',
-      Boolean(endAdornment) && 'adornedEnd',
     ],
-    input: ['input', disabled && 'disabled', multiline && 'multiline'],
+    input: ['input', disabled && 'disabled'],
   };
 
   return composeClasses(slots, useClassNamesOverride(getCheckboxUtilityClass));
@@ -63,7 +59,6 @@ const Checkbox = React.forwardRef(function Checkbox<RootComponentType extends Re
     endAdornment,
     error,
     id,
-    multiline = false,
     name,
     onClick,
     onChange,
@@ -76,11 +71,8 @@ const Checkbox = React.forwardRef(function Checkbox<RootComponentType extends Re
     required,
     startAdornment,
     value,
-    rows,
     slotProps = {},
     slots = {},
-    minRows,
-    maxRows,
     ...other
   } = props;
 
@@ -103,7 +95,7 @@ const Checkbox = React.forwardRef(function Checkbox<RootComponentType extends Re
     value,
   });
 
-  const type = 'checkbox'
+  const type = 'checkbox';
 
   const ownerState: CheckboxOwnerState = {
     ...props,
@@ -111,8 +103,6 @@ const Checkbox = React.forwardRef(function Checkbox<RootComponentType extends Re
     error: errorState,
     focused,
     formControlContext,
-    multiline,
-    type,
   };
 
   const classes = useUtilityClasses(ownerState);
@@ -144,7 +134,7 @@ const Checkbox = React.forwardRef(function Checkbox<RootComponentType extends Re
     ownerState,
     className: [classes.root, className],
   });
-  const CheckboxComponent = multiline ? slots.textarea ?? 'textarea' : slots.input ?? 'input';
+  const CheckboxComponent = 'input';
   const checkboxProps: WithOptionalOwnerState<CheckboxInputSlotProps> = useSlotProps({
     elementType: CheckboxComponent,
     getSlotProps: (otherHandlers: EventHandlers) => {
@@ -154,35 +144,13 @@ const Checkbox = React.forwardRef(function Checkbox<RootComponentType extends Re
       });
     },
     externalSlotProps: slotProps.input,
-    additionalProps: {
-      rows: multiline ? rows : undefined,
-      ...(multiline &&
-        !isHostComponent(CheckboxComponent) && {
-          minRows: rows || minRows,
-          maxRows: rows || maxRows,
-        }),
-    },
     ownerState,
     className: classes.input,
   });
 
-  if (process.env.NODE_ENV !== 'production') {
-    if (multiline) {
-      if (rows) {
-        if (minRows || maxRows) {
-          console.warn(
-            'MUI: You can not use the `minRows` or `maxRows` props when the input `rows` prop is set.',
-          );
-        }
-      }
-    }
-  }
-
   return (
     <Root {...rootProps}>
-      {startAdornment}
       <CheckboxComponent {...checkboxProps} />
-      {endAdornment}
     </Root>
   );
 }) as PolymorphicComponent<CheckboxTypeMap>;
@@ -228,10 +196,6 @@ Checkbox.propTypes /* remove-proptypes */ = {
    */
   disabled: PropTypes.bool,
   /**
-   * Trailing adornment for this input.
-   */
-  endAdornment: PropTypes.node,
-  /**
    * If `true`, the `input` will indicate an error by setting the `aria-invalid` attribute on the input and the `baseui--error` class on the root element.
    * The prop defaults to the value (`false`) inherited from the parent FormControl component.
    */
@@ -240,28 +204,6 @@ Checkbox.propTypes /* remove-proptypes */ = {
    * The id of the `input` element.
    */
   id: PropTypes.string,
-  /**
-   * @ignore
-   */
-  inputRef: PropTypes.oneOfType([
-    PropTypes.func,
-    PropTypes.shape({
-      current: PropTypes.object,
-    }),
-  ]),
-  /**
-   * Maximum number of rows to display when multiline option is set to true.
-   */
-  maxRows: PropTypes.number,
-  /**
-   * Minimum number of rows to display when multiline option is set to true.
-   */
-  minRows: PropTypes.number,
-  /**
-   * If `true`, a `textarea` element is rendered.
-   * @default false
-   */
-  multiline: PropTypes.bool,
   /**
    * Name attribute of the `input` element.
    */
@@ -305,10 +247,6 @@ Checkbox.propTypes /* remove-proptypes */ = {
    */
   required: PropTypes.bool,
   /**
-   * Number of rows to display when multiline option is set to true.
-   */
-  rows: PropTypes.number,
-  /**
    * The props used for each slot inside the Input.
    * @default {}
    */
@@ -324,40 +262,7 @@ Checkbox.propTypes /* remove-proptypes */ = {
   slots: PropTypes.shape({
     input: PropTypes.elementType,
     root: PropTypes.elementType,
-    textarea: PropTypes.elementType,
   }),
-  /**
-   * Leading adornment for this input.
-   */
-  startAdornment: PropTypes.node,
-  /**
-   * Type of the `input` element. It should be [a valid HTML5 input type](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#Form_%3Cinput%3E_types).
-   * @default 'text'
-   */
-  type: PropTypes /* @typescript-to-proptypes-ignore */.oneOf([
-    'button',
-    'checkbox',
-    'color',
-    'date',
-    'datetime-local',
-    'email',
-    'file',
-    'hidden',
-    'image',
-    'month',
-    'number',
-    'password',
-    'radio',
-    'range',
-    'reset',
-    'search',
-    'submit',
-    'tel',
-    'text',
-    'time',
-    'url',
-    'week',
-  ]),
   /**
    * The value of the `input` element, required for a controlled component.
    */
