@@ -16,14 +16,14 @@
     "slotProps": {
       "type": {
         "name": "shape",
-        "description": "{ input?: func<br>&#124;&nbsp;object, root?: func<br>&#124;&nbsp;object, thumb?: func<br>&#124;&nbsp;object, track?: func<br>&#124;&nbsp;object }"
+        "description": "{ input?: func<br>&#124;&nbsp;object, root?: func<br>&#124;&nbsp;object }"
       },
       "default": "{}"
     },
     "slots": {
       "type": {
         "name": "shape",
-        "description": "{ input?: elementType, root?: elementType, thumb?: elementType, track?: elementType<br>&#124;&nbsp;null }"
+        "description": "{ input?: elementType, root?: elementType }"
       },
       "default": "{}",
       "additionalInfo": { "slotsApi": true }
@@ -46,18 +46,6 @@
       "description": "The component that renders the input.",
       "default": "'input'",
       "class": "base-Checkbox-input"
-    },
-    {
-      "name": "thumb",
-      "description": "The component that renders the thumb.",
-      "default": "'span'",
-      "class": "base-Checkbox-thumb"
-    },
-    {
-      "name": "track",
-      "description": "The component that renders the track.",
-      "default": "'span'",
-      "class": "base-Checkbox-track"
     }
   ],
   "classes": [
