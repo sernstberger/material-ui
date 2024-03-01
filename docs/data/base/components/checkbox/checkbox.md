@@ -89,3 +89,15 @@ With hooks, you can take full control over how your component is rendered, and d
 
 You may not need to use hooks unless you find that you're limited by the customization options of their component counterparts—for instance, if your component requires significantly different [HTML structure](#anatomy).
 :::
+
+### Basic example
+
+{{"demo": "UseCheckboxesBasic.js"}}
+
+### Customized look and feel
+
+{{"demo": "UseCheckboxesCustom.js"}}
+
+## Accessibility
+
+To make the Checkbox component accessible, you should ensure that the corresponding labels reflect the Checkbox's current state.

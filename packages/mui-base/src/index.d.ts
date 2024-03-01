@@ -1,6 +1,7 @@
 export * from './utils';
 export * from './Badge';
 export * from './Button';
+export * from './Checkbox';
 export * from './ClickAwayListener';
 export * from './composeClasses';
 export * from './Dropdown';

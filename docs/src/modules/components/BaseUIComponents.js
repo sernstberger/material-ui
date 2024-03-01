@@ -27,6 +27,12 @@ function components() {
       href: '/base-ui/react-button/',
     },
     {
+      title: 'Checkbox',
+      srcLight: '/static/base-ui/react-components/checkbox-light.png',
+      srcDark: '/static/base-ui/react-components/checkbox-dark.png',
+      href: '/base-ui/react-checkbox/',
+    },
+    {
       title: 'Click-Away Listener',
       srcLight: '/static/base-ui/react-components/click-away-light.png',
       srcDark: '/static/base-ui/react-components/click-away-dark.png',
