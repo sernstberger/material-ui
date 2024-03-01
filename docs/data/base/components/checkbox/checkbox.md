@@ -56,3 +56,36 @@ The following code snippet applies a CSS class called my-checkbox to the input s
 ```jsx
 <Checkbox slotProps={{ input: { className: 'my-checkbox' } }} />
 ```
+
+### Usage with TypeScript
+
+In TypeScript, you can specify the custom component type used in the `slots.root` as a generic parameter of the unstyled component.
+This way, you can safely provide the custom root's props directly on the component:
+
+```tsx
+<Checkbox<typeof CustomComponent> slots={{ root: CustomComponent }} customProp />
+```
+
+The same applies for props specific to custom primitive elements:
+
+```tsx
+<Checkbox<'input'> slots={{ root: 'input' }} autoFocus={true} />
+```
+
+## Hook
+
+```js
+import { useCheckbox } from '@mui/base/useCheckbox';
+```
+
+The `useCheckbox` hook lets you apply the functionality of a Checkbox to a fully custom component.
+It returns props to be placed on the custom component, along with fields representing the component's internal state.
+
+Hooks _do not_ support [slot props](#custom-structure), but they do support [customization props](#customization).
+
+:::info
+Hooks give you the most room for customization, but require more work to implement.
+With hooks, you can take full control over how your component is rendered, and define all the custom props and CSS classes you need.
+
+You may not need to use hooks unless you find that you're limited by the customization options of their component counterparts—for instance, if your component requires significantly different [HTML structure](#anatomy).
+:::
