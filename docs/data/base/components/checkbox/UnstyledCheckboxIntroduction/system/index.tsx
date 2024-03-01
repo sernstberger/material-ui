@@ -60,11 +60,7 @@ const grey = {
 const Root = styled('span')(
   ({ theme }) => `
   box-sizing: border-box;
-  font-size: 0;
-  position: relative;
   display: inline-block;
-  width: 38px;
-  height: 24px;
   margin: 10px;
   cursor: pointer;
 
@@ -75,14 +71,16 @@ const Root = styled('span')(
 
   & .${checkboxClasses.input} {
     cursor: inherit;
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    opacity: 0;
-    z-index: 1;
-    margin: 0;
+    width: 20px;
+    height: 20px;
+  }
+
+  &.${checkboxClasses.checked} .${checkboxClasses.input} {
+    accent-color: ${blue[500]};
+  }
+
+  &:hover.${checkboxClasses.checked} .${checkboxClasses.input} {
+    accent-color: ${blue[700]};
   }
   `,
 );
