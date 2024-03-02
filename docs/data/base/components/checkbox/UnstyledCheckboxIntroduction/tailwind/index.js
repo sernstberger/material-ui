@@ -42,7 +42,7 @@ const Checkbox = React.forwardRef((props, ref) => {
           return {
             ...resolvedSlotProps,
             className: clsx(
-              `group relative inline-block w-[38px] h-[24px] m-2.5 ${
+              `group relative inline-block w-[24px] h-[24px] m-2.5 ${
                 ownerState.disabled
                   ? 'cursor-not-allowed opacity-40'
                   : 'cursor-pointer'

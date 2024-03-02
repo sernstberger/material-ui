@@ -82,5 +82,12 @@ const Root = styled('span')(
   &:hover.${checkboxClasses.checked} .${checkboxClasses.input} {
     accent-color: ${blue[700]};
   }
+
+  &.${checkboxClasses.focusVisible} .${checkboxClasses.input} {
+    outline-color: ${blue[200]};
+    outline-width: 5px;
+    outline-offset: 0;
+    outline-style: solid;
+  }
   `,
 );
