@@ -54,10 +54,7 @@ const SearchButton = styled('button')(({ theme }) => [
     cursor: 'pointer',
     transitionProperty: 'all',
     transitionDuration: '150ms',
-    boxShadow: `inset 0 -1px 1px ${(theme.vars || theme).palette.grey[100]}, 0 1px 0.5px ${alpha(
-      theme.palette.grey[100],
-      0.6,
-    )}`,
+    boxShadow: `hsl(200, 0%, 100%) 0 2px 0 inset, ${alpha(theme.palette.grey[100], 0.5)} 0 -1.5px 0 inset, ${alpha(theme.palette.grey[200], 0.5)} 0 1px 2px 0`,
     '&:hover': {
       background: (theme.vars || theme).palette.grey[100],
       borderColor: (theme.vars || theme).palette.grey[300],
@@ -70,9 +67,7 @@ const SearchButton = styled('button')(({ theme }) => [
   theme.applyDarkStyles({
     backgroundColor: alpha(theme.palette.primaryDark[700], 0.4),
     borderColor: (theme.vars || theme).palette.primaryDark[700],
-    boxShadow: `inset 0 -1px 1px ${(theme.vars || theme).palette.primaryDark[900]}, 0 1px 0.5px ${
-      (theme.vars || theme).palette.common.black
-    }`,
+    boxShadow: `${alpha(theme.palette.primaryDark[600], 0.1)} 0 2px 0 inset, ${(theme.vars || theme).palette.common.black} 0 -2px 0 inset, ${(theme.vars || theme).palette.common.black} 0 1px 2px 0`,
     '&:hover': {
       background: (theme.vars || theme).palette.primaryDark[700],
       borderColor: (theme.vars || theme).palette.primaryDark[600],
@@ -209,17 +204,17 @@ function NewStartScreen() {
       items: [
         {
           name: 'Overview',
-          href: '/toolpad/getting-started/',
+          href: '/toolpad/studio/getting-started/',
           icon: <StickyNote2RoundedIcon className="DocSearch-NewStartScreenTitleIcon" />,
         },
         {
           name: 'Why Toolpad?',
-          href: '/toolpad/getting-started/why-toolpad/',
+          href: '/toolpad/studio/getting-started/why-toolpad/',
           icon: <ChecklistRoundedIcon className="DocSearch-NewStartScreenTitleIcon" />,
         },
         {
           name: 'Example applications',
-          href: '/toolpad/examples/',
+          href: '/toolpad/studio/examples/',
           icon: <LibraryBooksRoundedIcon className="DocSearch-NewStartScreenTitleIcon" />,
         },
       ],
@@ -273,6 +268,8 @@ const productNameProductId = {
   x: 'MUI X',
   system: 'MUI System',
   toolpad: 'Toolpad',
+  'toolpad-studio': 'Toolpad Studio',
+  'toolpad-core': 'Toolpad Core',
 };
 
 export function convertProductIdToName(productInfo) {
@@ -546,8 +543,8 @@ export default function AppSearch(props) {
               fontSize: theme.typography.pxToRem(11),
               fontWeight: theme.typography.fontWeightBold,
               textTransform: 'uppercase',
-              letterSpacing: '.08rem',
-              color: theme.palette.grey[600],
+              letterSpacing: '.1rem',
+              color: (theme.vars || theme).palette.text.tertiary,
             },
             '& .DocSearch-NewStartScreenTitleIcon': {
               fontSize: theme.typography.pxToRem(18),
@@ -616,6 +613,10 @@ export default function AppSearch(props) {
                 width: '18px',
                 height: '18px',
               },
+              '& .DocSearch-VisuallyHiddenForAccessibility': {
+                width: 0,
+                visibility: 'hidden',
+              },
             },
             '& .DocSearch-Cancel': {
               display: 'block',
@@ -666,8 +667,8 @@ export default function AppSearch(props) {
               fontWeight: theme.typography.fontWeightBold,
               textTransform: 'uppercase',
               lineHeight: 1,
-              letterSpacing: '.08rem',
-              color: theme.palette.grey[600],
+              letterSpacing: '.1rem',
+              color: (theme.vars || theme).palette.text.tertiary,
             },
             '& .DocSearch-Hit': {
               paddingBottom: 8,

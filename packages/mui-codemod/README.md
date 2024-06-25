@@ -1,6 +1,6 @@
 # @mui/codemod
 
-> Codemod scripts for Material UI, Base UI, MUI System, Joy UI.
+> Codemod scripts for Material UI, Base UI, MUI System, Joy UI.
 
 [![npm version](https://img.shields.io/npm/v/@mui/codemod.svg?style=flat-square)](https://www.npmjs.com/package/@mui/codemod)
 [![npm downloads](https://img.shields.io/npm/dm/@mui/codemod.svg?style=flat-square)](https://www.npmjs.com/package/@mui/codemod)
@@ -834,7 +834,7 @@ npx @mui/codemod@latest v5.0.0/base-remove-component-prop <path>
 
 #### `rename-css-variables`
 
-Updates the names of the CSS variables of the Joy UI components to adapt to the new naming standards of the CSS variables for components.
+Updates the names of the CSS variables of the Joy UI components to adapt to the new naming standards of the CSS variables for components.
 
 ```diff
 -<List sx={{ py: 'var(--List-divider-gap)' }}>
@@ -862,7 +862,7 @@ npx @mui/codemod@latest v5.0.0/base-hook-imports <path>
 
 #### `joy-rename-classname-prefix`
 
-Renames the classname prefix from `'Joy'` to `'Mui'` for Joy UI components.
+Renames the classname prefix from `'Joy'` to `'Mui'` for Joy UI components.
 
 ```diff
  <Button
@@ -894,7 +894,7 @@ npx @mui/codemod@latest v5.0.0/joy-rename-row-prop <path>
 
 Remove `imgProps` prop by transferring its value into `slotProps.img`
 
-This change only affects Joy UI Avatar component.
+This change only affects Joy UI Avatar component.
 
 ```diff
  <Avatar
@@ -912,7 +912,7 @@ npx @mui/codemod@latest v5.0.0/joy-avatar-remove-imgProps <path>
 
 Replace `<TextField>` with composition of `Input`
 
-This change only affects Joy UI components.
+This change only affects Joy UI components.
 
 ```diff
 -import TextField from '@mui/joy/TextField';
@@ -970,7 +970,7 @@ npx @mui/codemod@latest v5.0.0/joy-text-field-to-input <path>
 
 Renames the `components` and `componentsProps` props to `slots` and `slotProps`, respectively.
 
-This change only affects Joy UI components.
+This change only affects Joy UI components.
 
 ```diff
  <Autocomplete
@@ -1632,14 +1632,14 @@ npx @mui/codemod@latest v5.0.0/jss-to-tss-react <path>
 The following scenarios are not currently handled by this codemod and will be marked with a
 "TODO jss-to-tss-react codemod" comment:
 
-- If the hook returned by `makeStyles` (e.g. `useStyles`) is exported and used in another file,
+- If the hook returned by `makeStyles` (for example `useStyles`) is exported and used in another file,
   the usages in other files will not be converted.
 - Arrow functions as the value for a CSS prop will not be converted. Arrow functions **are**
   supported at the rule level, though with some caveats listed below.
 - In order for arrow functions at the rule level to be converted, the parameter must use object
-  destructuring (e.g. `root: ({color, padding}) => (...)`). If the parameter is not destructured
-  (e.g. `root: (props) => (...)`), it will not be converted.
-- If an arrow function at the rule level contains a code block (i.e. contains an explicit `return`
+  destructuring (for example `root: ({color, padding}) => (...)`). If the parameter is not destructured
+  (for example `root: (props) => (...)`), it will not be converted.
+- If an arrow function at the rule level contains a code block (that is contains an explicit `return`
   statement) rather than just an object expression, it will not be converted.
 
 You can find more details about migrating from JSS to tss-react in [the migration guide](https://mui.com/material-ui/migration/migrating-from-jss/#2-use-tss-react).

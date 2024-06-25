@@ -6,7 +6,9 @@ import { useUserLanguage, useTranslate } from '@mui/docs/i18n';
 import { pathnameToLanguage } from 'docs/src/modules/utils/helpers';
 
 // #major-version-switch
-const HOST = 'https://mui.com';
+const HOST = process.env.PULL_REQUEST_ID
+  ? `https://deploy-preview-${process.env.PULL_REQUEST_ID}--${process.env.NETLIFY_SITE_NAME}.netlify.app`
+  : 'https://mui.com';
 
 interface HeadProps {
   card?: string;
@@ -40,7 +42,7 @@ export default function Head(props: HeadProps) {
       <meta name="description" content={description} />
       {/* X */}
       <meta name="twitter:card" content={largeCard ? 'summary_large_image' : 'summary'} />
-      {/* https://twitter.com/MUI_hq */}
+      {/* https://x.com/MUI_hq */}
       <meta name="twitter:site" content="@MUI_hq" />
       {/* #major-version-switch */}
       <meta name="twitter:title" content={title} />

@@ -31,7 +31,12 @@ describe('useAutocomplete', () => {
           {groupedOptions.length > 0 ? (
             <ul {...getListboxProps()}>
               {groupedOptions.map((option, index) => {
-                return <li {...getOptionProps({ option, index })}>{option}</li>;
+                const { key, ...optionProps } = getOptionProps({ option, index });
+                return (
+                  <li key={key} {...optionProps}>
+                    {option}
+                  </li>
+                );
               })}
             </ul>
           ) : null}
@@ -118,6 +123,7 @@ describe('useAutocomplete', () => {
       let filterOptions;
       let getOptionLabel;
       let options;
+
       beforeEach(() => {
         filterOptions = createFilterOptions({ matchFrom: 'any' });
         getOptionLabel = (option) => option.name;

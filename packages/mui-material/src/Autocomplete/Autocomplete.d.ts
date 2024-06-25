@@ -171,7 +171,7 @@ export interface AutocompleteProps<
   };
   /**
    * If `true`, the component is in a loading state.
-   * This shows the `loadingText` in place of suggestions (only if there are no suggestions to show, e.g. `options` are empty).
+   * This shows the `loadingText` in place of suggestions (only if there are no suggestions to show, for example `options` are empty).
    * @default false
    */
   loading?: boolean;
@@ -249,7 +249,7 @@ export interface AutocompleteProps<
    * @returns {ReactNode}
    */
   renderOption?: (
-    props: React.HTMLAttributes<HTMLLIElement>,
+    props: React.HTMLAttributes<HTMLLIElement> & { key: any },
     option: Value,
     state: AutocompleteRenderOptionState,
     ownerState: AutocompleteOwnerState<Value, Multiple, DisableClearable, FreeSolo, ChipComponent>,

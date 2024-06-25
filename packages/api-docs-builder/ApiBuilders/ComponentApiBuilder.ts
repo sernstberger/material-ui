@@ -10,7 +10,8 @@ import remarkVisit from 'unist-util-visit';
 import type { Link } from 'mdast';
 import { defaultHandlers, parse as docgenParse, ReactDocgenApi } from 'react-docgen';
 import { renderMarkdown } from '@mui/internal-markdown';
-import { ComponentClassDefinition } from '@mui-internal/docs-utils';
+import { ComponentClassDefinition } from '@mui/internal-docs-utils';
+import { parse as parseDoctrine, Annotation } from 'doctrine';
 import { ProjectSettings, SortingStrategiesType } from '../ProjectSettings';
 import { ComponentInfo, toGitHubPath, writePrettifiedFile } from '../buildApiUtils';
 import muiDefaultPropsHandler from '../utils/defaultPropsHandler';
@@ -55,7 +56,7 @@ export interface ReactApi extends ReactDocgenApi {
   /**
    * If `true`, the component supports theme default props customization.
    * If `null`, we couldn't infer this information.
-   * If `undefined`, it's not applicable in this context, e.g. Base UI components.
+   * If `undefined`, it's not applicable in this context, for example Base UI components.
    */
   themeDefaultProps: boolean | undefined | null;
   /**
@@ -147,7 +148,7 @@ export async function computeApiDescription(
  *  *
  *  * - [Icon API](https://mui.com/api/icon/)
  */
-async function annotateComponentDefinition(api: ReactApi) {
+async function annotateComponentDefinition(api: ReactApi, componentJsdoc: Annotation) {
   const HOST = 'https://mui.com';
 
   const typesFilename = api.filename.replace(/\.js$/, '.d.ts');
@@ -317,6 +318,14 @@ async function annotateComponentDefinition(api: ReactApi) {
   if (api.inheritance !== null) {
     markdownLines.push(`- inherits ${inheritanceAPILink}`);
   }
+
+  if (componentJsdoc.tags.length > 0) {
+    markdownLines.push('');
+  }
+
+  componentJsdoc.tags.forEach((tag) => {
+    markdownLines.push(`@${tag.title}${tag.name ? ` ${tag.name} -` : ''} ${tag.description}`);
+  });
 
   const jsdoc = `/**\n${markdownLines
     .map((line) => (line.length > 0 ? ` * ${line}` : ` *`))
@@ -734,19 +743,31 @@ export default async function generateComponentApi(
     });
   }
 
+  if (!reactApi.props) {
+    reactApi.props = {};
+  }
+
+  const { getComponentImports = defaultGetComponentImports } = projectSettings;
+  const componentJsdoc = parseDoctrine(reactApi.description);
+
+  // We override `reactApi.description` with `componentJsdoc.description` because
+  // the former can include JSDoc tags that we don't want to render in the docs.
+  reactApi.description = componentJsdoc.description;
+
   // Ignore what we might have generated in `annotateComponentDefinition`
   const annotatedDescriptionMatch = reactApi.description.match(/(Demos|API):\r?\n\r?\n/);
   if (annotatedDescriptionMatch !== null) {
     reactApi.description = reactApi.description.slice(0, annotatedDescriptionMatch.index).trim();
   }
 
-  const { getComponentImports = defaultGetComponentImports } = projectSettings;
   reactApi.filename = filename;
   reactApi.name = componentInfo.name;
   reactApi.imports = getComponentImports(componentInfo.name, filename);
   reactApi.muiName = componentInfo.muiName;
   reactApi.apiPathname = componentInfo.apiPathname;
   reactApi.EOL = EOL;
+  reactApi.slots = [];
+  reactApi.classes = [];
   reactApi.demos = componentInfo.getDemos();
   if (reactApi.demos.length === 0) {
     throw new Error(
@@ -770,16 +791,18 @@ export default async function generateComponentApi(
     }
   }
 
-  const { slots, classes } = parseSlotsAndClasses({
-    typescriptProject: project,
-    projectSettings,
-    componentName: reactApi.name,
-    muiName: reactApi.muiName,
-    slotInterfaceName: componentInfo.slotInterfaceName,
-  });
+  if (!projectSettings.skipSlotsAndClasses) {
+    const { slots, classes } = parseSlotsAndClasses({
+      typescriptProject: project,
+      projectSettings,
+      componentName: reactApi.name,
+      muiName: reactApi.muiName,
+      slotInterfaceName: componentInfo.slotInterfaceName,
+    });
 
-  reactApi.slots = slots;
-  reactApi.classes = classes;
+    reactApi.slots = slots;
+    reactApi.classes = classes;
+  }
 
   attachPropsTable(reactApi, projectSettings.propsSettings);
   attachTranslations(reactApi, projectSettings.propsSettings);
@@ -817,7 +840,7 @@ export default async function generateComponentApi(
         : !skipAnnotatingComponentDefinition
     ) {
       // Add comment about demo & api links (including inherited component) to the component file
-      await annotateComponentDefinition(reactApi);
+      await annotateComponentDefinition(reactApi, componentJsdoc);
     }
   }
 

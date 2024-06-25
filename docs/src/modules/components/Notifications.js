@@ -116,7 +116,7 @@ export default function Notifications() {
     // and create some distraction.
     const timeout = setTimeout(async () => {
       const notifications = await fetchNotifications().catch(() => {
-        // Swallow the exceptions, e.g. rate limit
+        // Swallow the exceptions, for example rate limit
         return [];
       });
 
@@ -131,7 +131,7 @@ export default function Notifications() {
           }, */
           {
             id: 1,
-            text: 'You can <a style="color: inherit;" target="_blank" rel="noopener" href="https://twitter.com/MUI_hq">follow us on X</a> or subscribe on <a style="color: inherit;" target="_blank" rel="noopener" href="/blog/">our blog</a> to receive exclusive tips and updates about MUI and the React ecosystem.',
+            text: 'You can <a style="color: inherit;" target="_blank" rel="noopener" href="https://x.com/MUI_hq">follow us on X</a> or subscribe on <a style="color: inherit;" target="_blank" rel="noopener" href="/blog/">our blog</a> to receive exclusive tips and updates about MUI and the React ecosystem.',
           },
           // Only 3
           ...notifications.splice(-3),
@@ -231,10 +231,7 @@ export default function Notifications() {
                       <React.Fragment key={message.id}>
                         <ListItem alignItems="flex-start">
                           <Typography gutterBottom>
-                            <span
-                              // eslint-disable-next-line react/no-danger
-                              dangerouslySetInnerHTML={{ __html: message.title }}
-                            />
+                            <b>{message.title}</b>
                           </Typography>
                           <Typography gutterBottom variant="body2" color="text.secondary">
                             <span

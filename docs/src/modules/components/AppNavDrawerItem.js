@@ -24,7 +24,7 @@ const Item = styled(
       color: (theme.vars || theme).palette.text.primary,
     }),
     ...(subheader && {
-      color: (theme.vars || theme).palette.grey[600],
+      color: (theme.vars || theme).palette.text.tertiary,
     }),
   };
 
@@ -144,7 +144,7 @@ const Item = styled(
     theme.applyDarkStyles({
       ...color,
       '&::before': {
-        background: alpha(theme.palette.primaryDark[700], 0.6),
+        background: alpha(theme.palette.primaryDark[500], 0.3),
       },
       '&.app-drawer-active': {
         color: (theme.vars || theme).palette.primary[300],
@@ -242,6 +242,7 @@ DeadLink.propTypes = {
 
 export default function AppNavDrawerItem(props) {
   const {
+    beta,
     children,
     depth,
     href,
@@ -262,7 +263,7 @@ export default function AppNavDrawerItem(props) {
   } = props;
   const [open, setOpen] = React.useState(initiallyExpanded);
   const handleClick = (event) => {
-    // Ignore click events meant for native link handling, e.g. open in new tab
+    // Ignore click events meant for native link handling, for example open in new tab
     if (samePageLinkNavigation(event)) {
       return;
     }
@@ -319,6 +320,7 @@ export default function AppNavDrawerItem(props) {
         {newFeature && <Chip label="New" sx={sxChip('success')} />}
         {planned && <Chip label="Planned" sx={sxChip('grey')} />}
         {unstable && <Chip label="Preview" sx={sxChip('primary')} />}
+        {beta && <Chip label="Beta" sx={sxChip('primary')} />}
       </Item>
       {expandable ? (
         <Collapse in={open} timeout="auto" unmountOnExit>
@@ -332,6 +334,7 @@ export default function AppNavDrawerItem(props) {
 }
 
 AppNavDrawerItem.propTypes = {
+  beta: PropTypes.bool,
   children: PropTypes.node,
   depth: PropTypes.number.isRequired,
   expandable: PropTypes.bool,

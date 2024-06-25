@@ -81,8 +81,8 @@ export default function Footer() {
                 aria-label="Enter your email address"
                 placeholder="Your email address"
                 inputProps={{
-                  autocomplete: 'off',
-                  ariaLabel: 'Enter your email address',
+                  autoComplete: 'off',
+                  'aria-label': 'Enter your email address',
                 }}
               />
               <Button variant="contained" color="primary" sx={{ flexShrink: 0 }}>
@@ -199,7 +199,7 @@ export default function Footer() {
           </IconButton>
           <IconButton
             color="inherit"
-            href="https://twitter.com/MaterialUI"
+            href="https://x.com/MaterialUI"
             aria-label="X"
             sx={{ alignSelf: 'center' }}
           >
