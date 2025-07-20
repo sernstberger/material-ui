@@ -1,6 +1,6 @@
 'use client';
 import * as React from 'react';
-import { useInput } from '@mui/base/useInput';
+import { Input } from '@base-ui-components/react/input';
 import FormControlContext, { FormControlContextValue } from '../FormControl/FormControlContext';
 
 export default function useForwardedInput<Output>(
@@ -35,16 +35,64 @@ export default function useForwardedInput<Output>(
     ...other
   } = props;
 
-  const { getRootProps, getInputProps, focused, error, disabled } = useInput({
-    disabled: disabledInProp ?? formControl?.disabled ?? disabledProp,
-    defaultValue,
-    error: errorProp,
-    onBlur,
+  // Base UI Input uses internal state management, so we need to track state manually
+  const [focused, setFocused] = React.useState(false);
+  const disabled = disabledInProp ?? formControl?.disabled ?? disabledProp;
+  const error = errorProp;
+
+  const handleFocus = (event: React.FocusEvent<HTMLInputElement>) => {
+    setFocused(true);
+    onFocus?.(event);
+  };
+
+  const handleBlur = (event: React.FocusEvent<HTMLInputElement>) => {
+    setFocused(false);
+    onBlur?.(event);
+  };
+
+  const getRootProps = () => ({
     onClick,
+  });
+
+  const getInputProps = () => ({
+    'aria-describedby': ariaDescribedby,
+    'aria-label': ariaLabel,
+    'aria-labelledby': ariaLabelledby,
+    autoComplete,
+    autoFocus,
+    defaultValue,
+    disabled,
+    id,
+    name,
+    onBlur: handleBlur,
     onChange,
-    onFocus,
+    onFocus: handleFocus,
+    onKeyDown,
+    onKeyUp,
+    placeholder,
+    readOnly,
     required: required ?? formControl?.required,
+    type,
     value,
+    // Base UI Input specific props
+    onValueChange: (newValue: string, event: Event) => {
+      if (onChange) {
+        // Create a synthetic event that matches React's ChangeEvent interface
+        const inputElement = event.target as HTMLInputElement;
+        inputElement.value = newValue;
+        
+        const syntheticEvent = {
+          ...event,
+          target: inputElement,
+          currentTarget: inputElement,
+          nativeEvent: event as any,
+          isDefaultPrevented: () => false,
+          isPropagationStopped: () => false,
+          persist: () => {},
+        } as React.ChangeEvent<HTMLInputElement>;
+        onChange(syntheticEvent);
+      }
+    },
   });
 
   const rootStateClasses = {
@@ -89,6 +137,11 @@ export default function useForwardedInput<Output>(
     propsToForward: Record<string, any>;
     rootStateClasses: Record<string, any>;
     inputStateClasses: Record<string, any>;
-  } & ReturnType<typeof useInput> &
-    Output & { formControl: FormControlContextValue };
+    getRootProps: () => Record<string, any>;
+    getInputProps: () => Record<string, any>;
+    focused: boolean;
+    error: boolean;
+    disabled: boolean;
+    formControl: FormControlContextValue;
+  } & Output;
 }

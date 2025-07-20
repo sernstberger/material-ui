@@ -3,9 +3,10 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import capitalize from '@mui/utils/capitalize';
 import { OverridableComponent } from '@mui/types';
-import { unstable_composeClasses as composeClasses } from '@mui/base/composeClasses';
+import composeClasses from '@mui/utils/composeClasses';
 import { styled, useThemeProps } from '../styles';
 import useSlot from '../utils/useSlot';
+import { Input as BaseInput } from '@base-ui-components/react/input';
 import { InputTypeMap, InputProps, InputOwnerState } from './InputProps';
 import inputClasses, { getInputUtilityClass } from './inputClasses';
 import useForwardedInput from './useForwardedInput';
@@ -220,6 +221,56 @@ const InputInput = styled(StyledInputHtml, {
   overridesResolver: (props, styles) => styles.input,
 })({});
 
+// Base UI Input wrapper that applies Joy UI styling
+const BaseInputWrapper = styled(BaseInput)<{ ownerState: InputOwnerState }>(
+  ({ ownerState }) => ({
+    border: 'none',
+    minWidth: 0,
+    outline: 0,
+    padding: 0,
+    flex: 1,
+    color: 'inherit',
+    backgroundColor: 'transparent',
+    fontFamily: 'inherit',
+    fontSize: 'inherit',
+    fontStyle: 'inherit',
+    fontWeight: 'inherit',
+    lineHeight: 'inherit',
+    textOverflow: 'ellipsis',
+    '&:-webkit-autofill': {
+      paddingInline: 'var(--Input-paddingInline)',
+      ...(!ownerState.startDecorator && {
+        marginInlineStart: 'calc(-1 * var(--Input-paddingInline))',
+        paddingInlineStart: 'var(--Input-paddingInline)',
+        borderTopLeftRadius: 'calc(var(--Input-radius) - var(--variant-borderWidth, 0px))',
+        borderBottomLeftRadius: 'calc(var(--Input-radius) - var(--variant-borderWidth, 0px))',
+      }),
+      ...(!ownerState.endDecorator && {
+        marginInlineEnd: 'calc(-1 * var(--Input-paddingInline))',
+        paddingInlineEnd: 'var(--Input-paddingInline)',
+        borderTopRightRadius: 'calc(var(--Input-radius) - var(--variant-borderWidth, 0px))',
+        borderBottomRightRadius: 'calc(var(--Input-radius) - var(--variant-borderWidth, 0px))',
+      }),
+    },
+    '&::-webkit-input-placeholder': {
+      color: 'var(--Input-placeholderColor)',
+      opacity: 'var(--Input-placeholderOpacity)',
+    },
+    '&::-moz-placeholder': {
+      color: 'var(--Input-placeholderColor)',
+      opacity: 'var(--Input-placeholderOpacity)',
+    },
+    '&:-ms-input-placeholder': {
+      color: 'var(--Input-placeholderColor)',
+      opacity: 'var(--Input-placeholderOpacity)',
+    },
+    '&::-ms-input-placeholder': {
+      color: 'var(--Input-placeholderColor)',
+      opacity: 'var(--Input-placeholderOpacity)',
+    },
+  }),
+);
+
 const InputStartDecorator = styled(StyledInputStartDecorator, {
   name: 'JoyInput',
   slot: 'StartDecorator',
@@ -318,7 +369,7 @@ const Input = React.forwardRef(function Input(inProps, ref) {
       },
     }),
     className: [classes.input, inputStateClasses],
-    elementType: InputInput,
+    elementType: BaseInputWrapper,
     getSlotProps: getInputProps,
     internalForwardedProps: propsToForward,
     externalForwardedProps,
